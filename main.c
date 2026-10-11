@@ -9,15 +9,15 @@ void my_mlx_put_pixel(t_data *data, int x, int y, int color) {
 }
 
 
-int mandelbrot(int px, int py) {
+int mandelbrot(float px, float py) {
     float x = 0.0;
     float y = 0.0;
 
     int iter = 0;
     int max_iter = 1000;
     while (x*x + y*y <= 4 && iter < max_iter) {
-        int xtemp = x*x - y*y + px;
-        y = 2.0 * x * y + px;
+        float xtemp = x*x - y*y + px;
+        y = 2.0 * x * y + py;
         x = xtemp;
         iter++;
     }
@@ -30,8 +30,8 @@ int mandelbrot(int px, int py) {
 t_coor screen_to_cartesian(t_vars *vars, int x, int y) {
     t_coor point;
 
-    point.x = -2.0 + ((float)x / vars->width) * (0.47 + 2.0);
-    point.y = -1.12 - ((float)y / vars->height) * (1.12 + 1.12);
+    point.x = -2.0 + ((float)x / vars->width) * (0.47 - (-2.0));
+    point.y = -1.12 + ((float)y / vars->height) * (1.12 - (-1.12));
     return point;
 }
 
@@ -44,7 +44,7 @@ int	close(t_vars *vars)
 }
 
 
-void    plot(int f(int x, int y), t_data *data, t_vars *vars) {
+void    plot(int f(float x, float y), t_data *data, t_vars *vars) {
     int val;
     t_coor point;
     
@@ -53,9 +53,9 @@ void    plot(int f(int x, int y), t_data *data, t_vars *vars) {
             point = screen_to_cartesian(vars, x, y);
             val = f(point.x, point.y);
             if (val == 1)
-                my_mlx_put_pixel(data, x, y, 0);
+                my_mlx_put_pixel(data, x, y, 0x000000);
             else
-                my_mlx_put_pixel(data, x, y, 0xfffff);
+                my_mlx_put_pixel(data, x, y, 0xFFFFFF);
         }
     }
 }
