@@ -12,5 +12,3 @@ clean:
 	rm -rf $(objs)
 
 re:clean fractol
-	
-	
